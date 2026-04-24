@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mizan-Xətt Tədris Mərkəzi | Professional Hazırlıq</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>.icon{display:inline-block;font-style:normal;}</style>
+    <style>
+        :root {
+            --bg-deep: #020810;
+            --bg-navy: #08132a;
+            --bg-card: #0d1e3a;
+            --gold: #c9a84c;
+            --gold-light: #e8c876;
+            --gold-muted: rgba(201,168,76,0.15);
+            --text-bright: #f0f4ff;
+            --text-mid: #b8c4e0;
+            --text-dim: #6b7a99;
+            --border: rgba(201,168,76,0.18);
+            --ease: cubic-bezier(0.4,0,0.2,1);
+        }
+
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+        html { scroll-behavior: smooth; font-size: 16px; }
+
+        body {
+            background: var(--bg-deep);
+            color: var(--text-mid);
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.65;
+        }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--bg-deep); }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+        /* ── UTILITIES ── */
+        .container { max-width: 1160px; margin: 0 auto; padding: 0 20px; }
+        .sec { padding: 100px 0; }
+        .sec-label {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--gold);
+            margin-bottom: 14px;
+        }
+        .sec-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--text-bright);
+            line-height: 1.15;
+            margin-bottom: 16px;
+        }
+        .sec-title em { color: var(--gold); font-style: italic; }
+        .gold-line {
+            width: 48px; height: 2px;
+            background: var(--gold);
+            margin: 0 auto 50px;
+        }
+        .gold-line.left { margin-left: 0; }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 9px;
+            padding: 13px 28px;
+            border-radius: 3px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.35s var(--ease);
+            text-decoration: none;
+            border: 1px solid var(--gold);
+        }
+        .btn-fill {
+            background: var(--gold);
+            color: var(--bg-deep);
+        }
+        .btn-fill:hover {
+            background: transparent;
+            color: var(--gold);
+            box-shadow: 0 8px 24px rgba(201,168,76,0.18);
+            transform: translateY(-2px);
+        }
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-bright);
+            border-color: rgba(240,244,255,0.25);
+        }
+        .btn-ghost:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        /* ── HEADER ── */
+        header {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            padding: 18px 0;
+            background: rgba(2,8,16,0.82);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            transition: padding 0.3s var(--ease), background 0.3s;
+        }
+        header.scrolled { padding: 12px 0; background: rgba(2,8,16,0.97); }
+        nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem; font-weight: 700;
+            color: var(--gold); text-decoration: none;
+            display: flex; align-items: center; gap: 10px;
+            white-space: nowrap;
+        }
+        .logo i { font-size: 1.1rem; }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a {
+            color: var(--text-mid); text-decoration: none;
+            font-size: 0.875rem; font-weight: 500;
+            transition: color 0.25s; opacity: 0.85;
+        }
+        .nav-links a:hover { color: var(--gold); opacity: 1; }
+
+        /* hamburger */
+        .hamburger {
+            display: none; flex-direction: column; gap: 5px;
+            background: none; border: none; cursor: pointer; padding: 4px;
+        }
+        .hamburger span {
+            display: block; width: 24px; height: 2px;
+            background: var(--text-bright);
+            transition: all 0.3s var(--ease);
+            border-radius: 2px;
+        }
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* mobile menu */
+        .mobile-menu {
+            display: none;
+            position: fixed; inset: 0; z-index: 99;
+            background: rgba(2,8,16,0.98);
+            flex-direction: column; align-items: center; justify-content: center;
+            gap: 36px;
+        }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu a {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem; font-weight: 600;
+            color: var(--text-bright); text-decoration: none;
+            transition: color 0.25s;
+        }
+        .mobile-menu a:hover { color: var(--gold); }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center;
+            padding: 120px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 65% 20%, rgba(201,168,76,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 70% at 5% 90%, rgba(8,19,42,0.6) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        /* grain texture */
+        .hero::after {
+            content: '';
+            position: absolute; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none; opacity: 0.4;
+        }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 60px;
+            position: relative; z-index: 1;
+        }
+        .hero-eyebrow {
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 22px;
+        }
+        .hero-eyebrow::before, .hero-eyebrow::after {
+            content: ''; display: block;
+            height: 1px; background: var(--gold);
+        }
+        .hero-eyebrow::before { width: 30px; }
+        .hero-eyebrow::after { flex: 1; opacity: 0.2; max-width: 60px; }
+        .hero-eyebrow span {
+            font-size: 0.72rem; font-weight: 600;
+            letter-spacing: 4px; text-transform: uppercase;
+            color: var(--gold);
+        }
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.6rem, 5.5vw, 4.4rem);
+            font-weight: 700; line-height: 1.08;
+            color: var(--text-bright);
+            margin-bottom: 24px;
+        }
+        .hero h1 em { color: var(--gold); font-style: italic; }
+        .hero p {
+            font-size: 1.05rem;
+            color: var(--text-dim);
+            max-width: 520px;
+            margin-bottom: 40px;
+            line-height: 1.75;
+        }
+        .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+
+        .hero-stats {
+            display: flex; gap: 0;
+            margin-top: 56px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            width: fit-content;
+        }
+        .stat {
+            padding: 20px 32px;
+            border-right: 1px solid var(--border);
+            text-align: center;
+        }
+        .stat:last-child { border-right: none; }
+        .stat strong {
+            display: block;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem; font-weight: 700;
+            color: var(--gold); line-height: 1;
+            margin-bottom: 5px;
+        }
+        .stat span { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-dim); }
+
+        .hero-deco {
+            width: 260px; height: 260px;
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+        }
+        .hero-deco::before {
+            content: '';
+            position: absolute; inset: 0;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            animation: pulse-ring 4s ease-in-out infinite;
+        }
+        .hero-deco::after {
+            content: '';
+            position: absolute;
+            inset: 24px;
+            border-radius: 50%;
+            border: 1px solid rgba(201,168,76,0.08);
+            animation: pulse-ring 4s ease-in-out 1.5s infinite;
+        }
+        .hero-deco i {
+            font-size: 7rem;
+            color: rgba(201,168,76,0.12);
+            z-index: 1;
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes pulse-ring {
+            0%, 100% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.06); opacity: 0.12; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        /* ── WHY US ── */
+        .why { background: var(--bg-navy); }
+        .why-header { text-align: center; }
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 38px 32px;
+            transition: all 0.4s var(--ease);
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            transform: scaleX(0);
+            transition: transform 0.4s var(--ease);
+        }
+        .card:hover { transform: translateY(-8px); border-color: rgba(201,168,76,0.35); box-shadow: 0 24px 48px rgba(0,0,0,0.35); }
+        .card:hover::before { transform: scaleX(1); }
+        .card-icon {
+            width: 52px; height: 52px;
+            background: var(--gold-muted);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 24px;
+        }
+        .card-icon i { font-size: 1.4rem; color: var(--gold); }
+        .card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.35rem; font-weight: 600;
+            color: var(--text-bright);
+            margin-bottom: 12px;
+        }
+        .card p { font-size: 0.92rem; color: var(--text-dim); line-height: 1.7; }
+
+        /* ── COURSES ── */
+        .course-block {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 32px;
+            background: var(--bg-card);
+            transition: border-color 0.35s;
+        }
+        .course-block:hover { border-color: rgba(201,168,76,0.4); }
+        .course-block.reverse { direction: rtl; }
+        .course-block.reverse > * { direction: ltr; }
+        .course-content {
+            padding: 52px 48px;
+            display: flex; flex-direction: column;
+            justify-content: center;
+        }
+        .course-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 0.7rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 3px;
+            color: var(--gold);
+            background: var(--gold-muted);
+            padding: 6px 14px;
+            border-radius: 100px;
+            margin-bottom: 20px;
+            width: fit-content;
+        }
+        .course-content h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.6rem, 2.5vw, 2.1rem);
+            font-weight: 700;
+            color: var(--text-bright);
+            line-height: 1.15;
+            margin-bottom: 16px;
+        }
+        .course-content p { font-size: 0.93rem; color: var(--text-dim); line-height: 1.75; margin-bottom: 28px; }
+        .course-list { list-style: none; margin-bottom: 32px; display: flex; flex-direction: column; gap: 12px; }
+        .course-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 0.92rem; color: var(--text-mid); }
+        .course-list li i { color: var(--gold); font-size: 0.75rem; margin-top: 4px; flex-shrink: 0; }
+        .course-visual {
+            background: linear-gradient(135deg, rgba(201,168,76,0.06) 0%, transparent 60%);
+            display: flex; align-items: center; justify-content: center;
+            min-height: 320px;
+            position: relative;
+            overflow: hidden;
+        }
+        .course-visual::before {
+            content: '';
+            position: absolute;
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .course-visual::after {
+            content: '';
+            position: absolute;
+            width: 280px; height: 280px;
+            border-radius: 50%;
+            border: 1px solid rgba(201,168,76,0.06);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .course-visual i { font-size: 6rem; color: rgba(201,168,76,0.14); z-index: 1; }
+
+        /* ── FAQ ── */
+        .faq-bg { background: var(--bg-navy); }
+        .faq-inner { max-width: 740px; margin: 0 auto; }
+        .faq-head { text-align: center; }
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            overflow: hidden;
+        }
+        .faq-item:first-child { border-top: 1px solid var(--border); }
+        .faq-q {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 22px 0;
+            cursor: pointer;
+            transition: color 0.25s;
+            gap: 16px;
+        }
+        .faq-q h4 { font-size: 1rem; font-weight: 500; color: var(--text-bright); line-height: 1.4; }
+        .faq-q .faq-icon {
+            width: 28px; height: 28px; flex-shrink: 0;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gold); font-size: 0.7rem;
+            transition: all 0.3s;
+        }
+        .faq-item.active .faq-q { color: var(--gold); }
+        .faq-item.active .faq-q h4 { color: var(--gold); }
+        .faq-item.active .faq-icon { background: var(--gold); color: var(--bg-deep); border-color: var(--gold); transform: rotate(45deg); }
+        .faq-a {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.4s var(--ease);
+        }
+        .faq-a p { padding-bottom: 22px; font-size: 0.93rem; color: var(--text-dim); line-height: 1.75; }
+        .faq-item.active .faq-a { max-height: 180px; }
+
+        /* ── CONTACT ── */
+        .contact-wrap {
+            background: linear-gradient(135deg, rgba(201,168,76,0.1) 0%, rgba(201,168,76,0.03) 100%);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 80px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .contact-wrap::before {
+            content: '';
+            position: absolute;
+            width: 500px; height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        .contact-wrap h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 16px;
+            position: relative;
+        }
+        .contact-wrap p { color: var(--text-dim); font-size: 1rem; margin-bottom: 40px; position: relative; }
+        .contact-btns { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; position: relative; }
+        .c-btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 15px 32px;
+            border-radius: 6px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem; font-weight: 600;
+            text-decoration: none;
+            background: var(--bg-deep);
+            color: var(--gold);
+            border: 1px solid var(--border);
+            transition: all 0.35s var(--ease);
+        }
+        .c-btn:hover { background: var(--gold); color: var(--bg-deep); border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 12px 28px rgba(201,168,76,0.2); }
+        .c-btn i { font-size: 1.1rem; }
+
+        /* ── FOOTER ── */
+        footer {
+            background: #010509;
+            border-top: 1px solid var(--border);
+            padding: 72px 0 36px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 56px;
+        }
+        .f-brand p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.7; margin-top: 14px; max-width: 260px; }
+        .f-col h5 {
+            font-size: 0.72rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 3px;
+            color: var(--gold); margin-bottom: 20px;
+        }
+        .f-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .f-col ul a { font-size: 0.88rem; color: var(--text-dim); text-decoration: none; transition: color 0.25s; }
+        .f-col ul a:hover { color: var(--gold); }
+        .f-col .phone { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: var(--text-mid); }
+        .f-col .phone i { color: var(--gold); font-size: 0.85rem; }
+        .f-bottom {
+            padding-top: 28px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 12px;
+        }
+        .f-bottom p { font-size: 0.8rem; color: var(--text-dim); }
+
+        /* ── RESPONSIVE ── */
+
+        /* Tablet */
+        @media (max-width: 1024px) {
+            .cards-grid { grid-template-columns: 1fr 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 900px) {
+            .course-block { grid-template-columns: 1fr; }
+            .course-block.reverse { direction: ltr; }
+            .course-visual { min-height: 200px; }
+            .hero-grid { grid-template-columns: 1fr; }
+            .hero-deco { display: none; }
+            .hero { text-align: center; }
+            .hero-eyebrow { justify-content: center; }
+            .hero p { margin: 0 auto 40px; }
+            .hero-btns { justify-content: center; }
+            .hero-stats { margin: 40px auto 0; }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .nav-links, .nav-cta { display: none; }
+            .hamburger { display: flex; }
+            .sec { padding: 72px 0; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .hero-stats { flex-direction: column; gap: 0; width: 100%; }
+            .stat { border-right: none; border-bottom: 1px solid var(--border); }
+            .stat:last-child { border-bottom: none; }
+            .course-content { padding: 36px 28px; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .f-bottom { flex-direction: column; text-align: center; }
+            .contact-wrap { padding: 52px 24px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 0.95rem; }
+            .btn { padding: 12px 22px; font-size: 0.83rem; }
+            .sec-title { font-size: 1.75rem; }
+            .course-content { padding: 28px 20px; }
+            .c-btn { padding: 13px 24px; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="hdr">
+    <div class="container">
+        <nav>
+            <a href="#home" class="logo"><i class="fas fa-balance-scale"></i> Mizan-Xətt</a>
+            <ul class="nav-links">
+                <li><a href="#home">Ana Səhifə</a></li>
+                <li><a href="#about">Niyə Biz?</a></li>
+                <li><a href="#courses">Tədris</a></li>
+                <li><a href="#faq">Suallar</a></li>
+                <li><a href="#contact">Əlaqə</a></li>
+            </ul>
+            <a href="https://wa.me/9940771067917" class="btn btn-fill nav-cta">Qeydiyyat</a>
+            <button class="hamburger" id="ham" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+    </div>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mob-menu">
+    <a href="#home" class="mob-link">Ana Səhifə</a>
+    <a href="#about" class="mob-link">Niyə Biz?</a>
+    <a href="#courses" class="mob-link">Tədris</a>
+    <a href="#faq" class="mob-link">Suallar</a>
+    <a href="#contact" class="mob-link">Əlaqə</a>
+    <a href="https://wa.me/9940771067917" class="btn btn-fill">Qeydiyyat</a>
+</div>
+
+<!-- HERO -->
+<section id="home" class="hero">
+    <div class="container">
+        <div class="hero-grid">
+            <div class="hero-text">
+                <div class="hero-eyebrow">
+                    <span>Onlayn Tədris Mərkəzi</span>
+                </div>
+                <h1>Bilik və <em>Mənəviyyatın</em><br>Kəsişməsi</h1>
+                <p>Müasir texnologiyalarla ənənəvi tədris metodlarını birləşdirərək, elmin qapılarını sizin üçün hər yerdə açırıq.</p>
+                <div class="hero-btns">
+                    <a href="#courses" class="btn btn-fill">Dərslərə bax <i class="fas fa-arrow-right"></i></a>
+                    <a href="#about" class="btn btn-ghost">Haqqımızda</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat"><strong>100%</strong><span>Onlayn Giriş</span></div>
+                    <div class="stat"><strong>Onlayn</strong><span>Təhsil Metodu</span></div>
+                    <div class="stat"><strong>Peşəkar</strong><span>Müəllim Heyəti</span></div>
+                </div>
+            </div>
+            <div class="hero-deco">
+                <i class="fas fa-book-open"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- WHY US -->
+<section id="about" class="sec why">
+    <div class="container">
+        <div class="why-header" style="text-align:center; margin-bottom: 56px;">
+            <span class="sec-label">Üstünlüklərimiz</span>
+            <h2 class="sec-title">Niyə <em>Mizan-Xətti</em> Seçməli?</h2>
+            <div class="gold-line"></div>
+        </div>
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-chalkboard-user"></i></div>
+                <h3>Peşəkar Müəllimələr</h3>
+                <p>Dərslərimiz öz sahəsinin mütəxəssisi olan, fədakar müəllimələr tərəfindən metodik şəkildə keçirilir.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-globe"></i></div>
+                <h3>Məkan Sərhədsizliyi</h3>
+                <p>Dünyanın istənilən nöqtəsindən interaktiv dərslərimizə qoşulun, vaxtınıza və enerjinizə qənaət edin.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-award"></i></div>
+                <h3>Sertifikat Təminatı</h3>
+                <p>Kursu uğurla bitirən tələbələrimizə qazandıqları bilikləri təsdiq edən rəsmi sertifikat təqdim olunur.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- COURSES -->
+<section id="courses" class="sec">
+    <div class="container">
+        <div style="text-align:center; margin-bottom: 56px;">
+            <span class="sec-label">Proqramlarımız</span>
+            <h2 class="sec-title">Tədris <em>İstiqamətləri</em></h2>
+            <div class="gold-line"></div>
+        </div>
+
+        <div class="course-block">
+            <div class="course-content">
+                <div class="course-badge"><i class="fas fa-graduation-cap"></i> Akademik</div>
+                <h3>Akademik Hazırlıq</h3>
+                <p>Məktəb fənləri üzrə dərslərimiz şagirdlərin həm məktəb dərslərini yaxşılaşdırmasına, həm də gələcək imtahanlara hazırlaşmasına kömək edir.</p>
+                <ul class="course-list">
+                    <li><i class="fas fa-check-circle"></i> İbtidai və orta məktəb fənləri</li>
+                    <li><i class="fas fa-check-circle"></i> Fərdi və qrup şəklində yanaşma</li>
+                    <li><i class="fas fa-check-circle"></i> Müntəzəm sınaq imtahanları</li>
+                </ul>
+                <a href="#contact" class="btn btn-fill">Məsləhət al <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="course-visual">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+        </div>
+
+        <div class="course-block reverse">
+            <div class="course-content">
+                <div class="course-badge"><i class="fas fa-quran"></i> Dini Elmlər</div>
+                <h3>Dil və Quran Elmləri</h3>
+                <p>Dini elmlər və ərəb dili istiqamətində dərslərimiz tələbələrin həm dili, həm də müqəddəs kitabımızı düzgün oxumasını təmin edir.</p>
+                <ul class="course-list">
+                    <li><i class="fas fa-star"></i> Ərəb hərflərinin mükəmməl tədrisi</li>
+                    <li><i class="fas fa-star"></i> Məxrəc və Sifət dərsləri</li>
+                    <li><i class="fas fa-star"></i> Təcvid elmi — gözəl və axıcı qiraət</li>
+                </ul>
+                <a href="#contact" class="btn btn-fill">Qeydiyyatdan keç <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="course-visual">
+                <i class="fas fa-quran"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="sec faq-bg">
+    <div class="container">
+        <div class="faq-head" style="margin-bottom: 52px;">
+            <span class="sec-label">Tez-tez Verilən Suallar</span>
+            <h2 class="sec-title">Suallarınız <em>Var?</em></h2>
+            <div class="gold-line"></div>
+        </div>
+        <div class="faq-inner">
+            <div class="faq-item">
+                <div class="faq-q">
+                    <h4>Dərslər hansı saatlarda keçirilir?</h4>
+                    <div class="faq-icon"><i class="fas fa-plus"></i></div>
+                </div>
+                <div class="faq-a"><p>Dərslərimiz tələbənin və müəllimin uyğunluğuna əsasən fərqli saatlarda keçirilir.</p></div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">
+                    <h4>Onlayn dərslər effektivdirmi?</h4>
+                    <div class="faq-icon"><i class="fas fa-plus"></i></div>
+                </div>
+                <div class="faq-a"><p>Bəli, interaktiv lövhələr və canlı müzakirələr vasitəsilə onlayn dərslərimiz əyani dərslərdən heç də geri qalmır.</p></div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">
+                    <h4>Ödəniş şərtləri necədir?</h4>
+                    <div class="faq-icon"><i class="fas fa-plus"></i></div>
+                </div>
+                <div class="faq-a"><p>Ödənişlər seçdiyiniz kursun intensivliyinə görə dəyişir. Ətraflı məlumat üçün əlaqə saxlaya bilərsiniz.</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="sec">
+    <div class="container">
+        <div class="contact-wrap">
+            <h2>Bilik və Mənəviyyat Yolunda Bizə Qoşulun</h2>
+            <p>Doğru ölçü, düzgün xətt və aydın gələcək üçün yanınızdayıq.</p>
+            <div class="contact-btns">
+                <a href="https://wa.me/9940771067917" class="c-btn">
+                    <i class="fab fa-whatsapp"></i> WhatsApp ilə Yaz
+                </a>
+                <a href="https://www.instagram.com/mizan_tedris_merkezi?utm_source=qr&igsh=YW85NDE2OGFmY3Vp" class="c-btn">
+                    <i class="fab fa-instagram"></i> Instagram-da İzlə
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="f-brand">
+                <a href="#home" class="logo"><i class="fas fa-balance-scale"></i> Mizan-Xətt</a>
+                <p>"Elmin tərəzisi, təhsilin ünvanı." Mizan-Xətt onlayn təhsildə sizin peşəkar tərəfdaşınızdır.</p>
+            </div>
+            <div class="f-col">
+                <h5>Keçidlər</h5>
+                <ul>
+                    <li><a href="#home">Ana Səhifə</a></li>
+                    <li><a href="#about">Haqqımızda</a></li>
+                    <li><a href="#courses">Tədris Proqramları</a></li>
+                    <li><a href="#contact">Əlaqə</a></li>
+                </ul>
+            </div>
+            <div class="f-col">
+                <h5>Xidmətlər</h5>
+                <ul>
+                    <li><a href="#">Ərəb Dili</a></li>
+                    <li><a href="#">Quran Təhsili</a></li>
+                    <li><a href="#">Məxrəc və Təcvid</a></li>
+                    <li><a href="#">Məktəb Hazırlığı</a></li>
+                </ul>
+            </div>
+            <div class="f-col">
+                <h5>Əlaqə</h5>
+                <div class="phone"><i class="fas fa-phone"></i> +994 77 106 79 17</div>
+            </div>
+        </div>
+        <div class="f-bottom">
+            <p>© 2026 Mizan-Xətt Tədris Mərkəzi. Bütün hüquqlar qorunur.</p>
+            <p>✦ Designed by Speed</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Header scroll
+    window.addEventListener('scroll', () => {
+        document.getElementById('hdr').classList.toggle('scrolled', window.scrollY > 80);
+    });
+
+    // Hamburger
+    const ham = document.getElementById('ham');
+    const mob = document.getElementById('mob-menu');
+    ham.addEventListener('click', () => {
+        ham.classList.toggle('open');
+        mob.classList.toggle('open');
+        document.body.style.overflow = mob.classList.contains('open') ? 'hidden' : '';
+    });
+    document.querySelectorAll('.mob-link, .mobile-menu .btn').forEach(el => {
+        el.addEventListener('click', () => {
+            ham.classList.remove('open');
+            mob.classList.remove('open');
+            document.body.style.overflow = '';
+        });
+    });
+
+    // FAQ
+    document.querySelectorAll('.faq-q').forEach(q => {
+        q.addEventListener('click', () => {
+            const item = q.parentElement;
+            const wasOpen = item.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            if (!wasOpen) item.classList.add('active');
+        });
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            const t = document.querySelector(a.getAttribute('href'));
+            if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+        });
+    });
+</script>
+</body>
+</html>
